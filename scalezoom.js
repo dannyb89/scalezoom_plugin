@@ -5,7 +5,7 @@
  	$.fn.extend({ 
  		
  		//chained method
- 		scalezoom: function(options) {
+ 		scalezoom: function(settings) {
 
  			//Set method defaults
          var defaults = {
@@ -13,20 +13,32 @@
              viewportWidth: "full"
          }
 
-         var options  = $.extend(defaults, options);
+         var settings  = $.extend(defaults, settings);
 
 			//find matched element
 	 		return this.each(function() {
 			
-				var op = options;
 				var theImg = $(this);
 
+				$('.vp-img').css("min-height", settings.viewportHeight);
+
 				$( window ).resize(function() {
-				  
+
+					theImg.css("top", valignImg(theImg.height(), settings.viewportHeight));
 
 				});
 			
 	 		});
+
+	 		//function to vertically center image
+	 		function valignImg(img_h, vp_h){
+
+	 			var pullTop = 0;
+				pullTop = ((img_h - vp_h) / 2) * -1;
+
+				return pullTop;
+			}
+
 	   }
 
 	});
